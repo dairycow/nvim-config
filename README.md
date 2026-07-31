@@ -11,7 +11,7 @@ installed by a human **or by an AI agent**.
 - **Treesitter** syntax highlighting for Rust, Lua, Vim, Vimdoc, Query
 - **Plugins** (managed by [lazy.nvim](https://github.com/folke/lazy.nvim), auto-bootstrapped):
   - `Shatur/neovim-ayu` — colorscheme
-  - `nvim-lualine/lualine.nvim` — statusline
+  - `nvim-lualine/lualine.nvim` — statusline (git branch only)
   - `nvim-tree/nvim-tree.lua` — file explorer
   - `nvim-telescope/telescope.nvim` — fuzzy finder (with `telescope-fzf-native`)
   - `nvim-treesitter/nvim-treesitter` — syntax highlighting
