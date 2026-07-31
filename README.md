@@ -15,6 +15,7 @@ installed by a human **or by an AI agent**.
   - `nvim-tree/nvim-tree.lua` — file explorer
   - `nvim-telescope/telescope.nvim` — fuzzy finder (with `telescope-fzf-native`)
   - `nvim-treesitter/nvim-treesitter` — syntax highlighting
+  - `akinsho/toggleterm.nvim` — toggleable bottom terminal + cargo keybinds
 
 ## Files
 
@@ -79,9 +80,16 @@ compiles Treesitter parsers.
 | `<Space>ff`    | Find files (Telescope)            |
 | `<Space>fg`    | Live grep (Telescope, needs rg)   |
 | `<Space>fb`    | Switch buffers (Telescope)        |
+| `<Space>t`     | Toggle bottom terminal (toggleterm) |
+| `<Space>cb`    | `cargo build` (runs in bottom terminal) |
+| `<Space>cc`    | `cargo check`                     |
+| `<Space>cr`    | `cargo run`                       |
+| `<Space>ct`    | `cargo test`                      |
+| `<Space>cl`    | `cargo clippy`                    |
 
 Inside nvim-tree: `Enter` open, `a` create, `d` delete, `r` rename, `H` toggle hidden, `q` quit, `?` all keys.
 Inside Telescope: type to filter, `Enter` open, `Esc` close.
+Inside the terminal: `Esc` or `jk` to leave terminal (insert) mode; `<Space>t` to hide the terminal.
 
 ## Verification checklist (for agents)
 
@@ -94,7 +102,7 @@ After install, confirm each item before declaring success:
 3. `nvim --headless -c "lua print(vim.g.colors_name or 'NONE')" -c "qa"` prints `ayu`
 4. Plugin dir contains: `lazy.nvim`, `neovim-ayu`, `lualine.nvim`,
    `nvim-tree.lua`, `nvim-web-devicons`, `nvim-treesitter`, `plenary.nvim`,
-   `telescope.nvim`, `telescope-fzf-native.nvim`
+   `telescope.nvim`, `telescope-fzf-native.nvim`, `toggleterm.nvim`
    - Linux: `~/.local/share/nvim/lazy/`
    - Windows: `~\AppData\Local\nvim-data\lazy\`
 5. Open a `.rs` file: `nvim some_file.rs` — highlighting + absolute line numbers present.

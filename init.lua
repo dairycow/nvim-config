@@ -10,6 +10,7 @@ vim.o.expandtab = true
 vim.o.shiftwidth = 4
 vim.o.tabstop = 4
 vim.g.mapleader = " "
+vim.o.hidden = true -- keep terminals in background when closed (toggleterm)
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -79,6 +80,29 @@ require("lazy").setup({
     lazy = false,
     build = ":TSUpdate",
   },
+
+  -- Terminal (bottom, toggleable) + cargo keybinds
+  {
+    "akinsho/toggleterm.nvim",
+    version = "*",
+    opts = {
+      open_mapping = false, -- we map <leader>t manually (avoids insert-mode space conflicts)
+      direction = "horizontal", -- bottom terminal
+      size = 15,
+      shade_terminals = true,
+      start_in_insert = true,
+      persist_size = true,
+      close_on_exit = false, -- keep terminal open so cargo errors stay visible
+    },
+    keys = {
+      { "<leader>t",  "<cmd>ToggleTerm<cr>",                 desc = "Toggle bottom terminal" },
+      { "<leader>cb", '<cmd>TermExec cmd="cargo build"<cr>', desc = "cargo build" },
+      { "<leader>cc", '<cmd>TermExec cmd="cargo check"<cr>', desc = "cargo check" },
+      { "<leader>cr", '<cmd>TermExec cmd="cargo run"<cr>',   desc = "cargo run" },
+      { "<leader>ct", '<cmd>TermExec cmd="cargo test"<cr>',  desc = "cargo test" },
+      { "<leader>cl", '<cmd>TermExec cmd="cargo clippy"<cr>',desc = "cargo clippy" },
+    },
+  },
 })
 
 -- Install Treesitter parsers (no-op if already installed)
@@ -88,4 +112,14 @@ require("nvim-treesitter").install { "rust", "lua", "vim", "vimdoc", "query" }
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "rust", "lua", "vim", "vimdoc", "query" },
   callback = function() vim.treesitter.start() end,
+})
+
+-- Terminal mode: Esc / jk to return to normal mode
+vim.api.nvim_create_autocmd("TermOpen", {
+  pattern = "term://*toggleterm#*",
+  callback = function()
+    local opts = { buffer = 0 }
+    vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
+    vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
+  end,
 })
